@@ -6,6 +6,7 @@
 
 public fn
 public fe
+public f_actual
 
 ;	float res = 0;
 ;	float p = 1;
@@ -117,4 +118,50 @@ fe proc \
     ret
 fe endp
 
+f_actual proc\
+    x : DWORD
+
+	local a : DWORD
+	local b : DWORD
+    mov a, 8544 
+    mov b, 23225
+    finit
+    fld dword ptr [a]
+    fld dword ptr [b]
+    fdiv st(0), st(1) ;e ~ +-0,00000001
+    fld x ;x
+    fabs
+    fld1 ;e^x
+
+    ;st0 = 1
+    ;st1 = x
+    ;st2 = e
+    mov ecx, x
+    pow:
+        fld1
+        fsub st(2), st(0); --x
+        fldz
+        fcomp st(3); st3 is x
+        fstsw AX
+		fcomp 
+        test AX, 4500h; 0>x
+        jz @F
+        fmul st(0), st(2)
+    jmp pow
+    @@:
+    ;st0 = e^x
+    ;st1 = ~0
+    ;st2 = e
+    fld st(0)           ; e^x, e^x, e
+    fmul st(0), st(1)   ; e^2x, e^x, e
+    fld1                ; 1, e^2x, e^x, e
+    fadd st(0), st(1)   ; 1+e^2x, e^2x, e^x, e
+    fdiv st(0), st(2)   ; (1+e^2x)/e^x, e^2x, e^x, e
+    fld1                ; 1, (1+e^2x)/e^x, e^2x, e^x, e
+    fld1                ; 1, 1, (1+e^2x)/e^x, e^2x, e^x, e
+    fadd st(0), st(1)   ; 2, 1, (1+e^2x)/e^x, e^2x, e^x, e
+    fdiv st(2), st(0)   ; 2, 1, (1+e^2x)/(e^x*2), e^2x, e^x, e
+    fxch st(2)          ; (1+e^2x)/(e^x*2), 1, 2, e^2x, e^x, e
+    ret
+f_actual endp
 end

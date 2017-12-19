@@ -10,3 +10,6 @@ extern "C" double fe(
 	float e
 );
 
+extern "C" double f_actual(
+	float x
+);
