@@ -128,4 +128,38 @@ compare proc \
     ret
 compare endp
 
+compare_g proc \
+    a : PTR DWORD, \
+    b : PTR DWORD, \
+    len : DWORD
+
+    local result : QWORD
+
+    mov eax, a
+    mov ebx, b
+    mov ecx, len
+	mov edx, 0
+    do:
+        movq mm1, [eax]
+        movq mm2, [ebx]
+        pcmpgtd mm1, mm2
+        movq result, mm1
+        mov edx, dword ptr [result]
+        cmp edx, 0
+        je false 
+        mov edx, dword ptr [result+1]
+        cmp edx, 0
+        je false 
+        add eax, 8
+        add ebx, 8
+    loop do
+
+    mov eax, 1
+    ret
+
+    false:
+    mov eax, 0
+    ret
+compare_g endp
+
 end

@@ -23,8 +23,8 @@ int main()
 	//cout << "Exact result = " << (pow(M_E, x)+ pow(M_E, -x))/2 << "\n";
 	cout << "F(x, n) = " << fn(x, n) << "\n";
 	cout << "F(x, eps) = " << fe(x, e) << "\n";
-	cout << "Exact result = " << f_actual(x);
-	cin >> x;
+	cout << "Exact result = " << f_actual(x) << "\n";
+	system("pause");
     return 0;
 }
 

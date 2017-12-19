@@ -33,3 +33,9 @@ extern "C" bool compare(
 	int* b,
 	int len
 );
+
+extern "C" bool compare_g(
+	int* a,
+	int* b,
+	int len
+);

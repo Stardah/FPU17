@@ -38,11 +38,12 @@ int main()
 	getline(cin, input);
 	iss << input;
 	while (iss >> n)
+
 		b.push_back(n);
 	print("A = ", a.data(), a.size()); 
 	print("B = ", b.data(), b.size());
 	//-------
-
+	
 	add_up(a.data(), b.data(), (a.size()+1)/2, dst);
 	print("A + B = ", dst, a.size());
 
@@ -58,8 +59,10 @@ int main()
 	divide(a.data(), (a.size() + 1) / 2, n, dst);
 	print("A / 2^n = ", dst, a.size());
 
-	cout << "A == B: " << compare(a.data(), b.data(), (a.size() + 1) / 2);
-	cin >> n;
+	cout << "A == B: " << compare(a.data(), b.data(), (a.size() + 1) / 2) << "\n";
+	cout << "A > B: " << compare_g(a.data(), b.data(), (a.size() + 1) / 2) << "\n";;
+
+	system("pause");
     return 0;
 }
 
